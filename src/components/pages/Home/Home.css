@@ -1,3 +1,21 @@
 .app {
   background-color: #333;
+  padding: 7rem;
+  font-size: 3rem;
+}
+input {
+  width: 38rem;
+  height: 3rem;
+  font-size: 2rem;
+  outline: none;
+  border-radius: 1rem;
+  text-indent: 1rem;
+}
+button {
+  width: 23rem;
+  height: 3.5rem;
+  margin: 3rem;
+  font-size: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
 }
