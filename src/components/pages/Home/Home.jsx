@@ -21,6 +21,11 @@ const Home = () => {
 
   useEffect(() => {
     console.log(toDoList);
+    const readTasks = async () => {
+      const { data, error } = await supabase.from("ToDoList").select("*");
+      data ? setToDoList(data) : console.log("Error into ReadTask", error);
+    };
+    readTasks();
     const addTask = async () => {
       console.log(newTask);
       const objNewTask = {
@@ -32,7 +37,7 @@ const Home = () => {
           .from("ToDoList")
           .insert(objNewTask)
           .single();
-        error ? console.log("Error", error) : toDoList.push(data);
+        error ? console.log("Error", error) : toDoList.push(objNewTask);
       }
     };
     addTask();
@@ -45,7 +50,11 @@ const Home = () => {
         <button type="button" onClick={addTaskToHook}>
           Befehl erstellen
         </button>
-        <div className="result_Box"></div>
+        <div className="result_Box flex justify-around">
+          {toDoList.map((i) => {
+            return <p>{i.name}</p>;
+          })}
+        </div>
       </div>
     </>
   );
