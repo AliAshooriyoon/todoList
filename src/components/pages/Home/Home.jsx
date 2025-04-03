@@ -21,8 +21,33 @@ const Home = () => {
   const addTaskToHook = () => {
     setNewTask(valueItem.current.value);
   };
-
   useFetch(toDoList, supabase, newTask, setToDoList);
+  // ------------
+  const removeItem = (elmID, toDoList) => {
+    console.log("willst du das tun ?", elmID);
+    const removeIt = async () => {
+      const { data, error } = await supabase
+        .from("ToDoList")
+        .delete()
+        .eq("id", elmID);
+      if (!error) {
+        const elmAdresse = toDoList.filter((i) => i.id == elmID);
+        toDoList.splice(
+          toDoList.indexOf(toDoList.find((i) => i.id == elmID)),
+          1,
+        );
+        console.log(toDoList.indexOf(toDoList.find((i) => i.id == elmID)));
+        console.log(toDoList);
+        console.log(toDoList.filter((i) => i.id == elmID));
+      } else {
+        console.log("Error", error);
+      }
+    };
+    removeIt();
+  };
+  useEffect(() => {
+    console.log("aa`");
+  }, [toDoList]);
   return (
     <>
       <div className="home mx-auto text-center ">
@@ -50,13 +75,16 @@ const Home = () => {
                 key={i.id}
                 className="bg-stone-400  min-w-64 px-4 rounded-2xl  mx-auto"
               >
-                <p className="flex flex-row justify-between items-center ">
+                <div className="flex flex-row justify-between items-center">
                   {i.name}
                   <div className="iconsManager flex justify-center items-center w-[30%]">
-                    <MdDelete className="cursor-pointer" />{" "}
+                    <MdDelete
+                      className="cursor-pointer"
+                      onClick={() => removeItem(i.id, toDoList)}
+                    />{" "}
                     <MdModeEdit className="cursor-pointer" />
                   </div>
-                </p>
+                </div>
               </div>
             );
           })}
