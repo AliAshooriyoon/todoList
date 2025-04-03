@@ -32,10 +32,11 @@ const Home = () => {
         .eq("id", elmID);
       if (!error) {
         const elmAdresse = toDoList.filter((i) => i.id == elmID);
-        toDoList.splice(
-          toDoList.indexOf(toDoList.find((i) => i.id == elmID)),
-          1,
-        );
+        // toDoList.splice(
+        //   toDoList.indexOf(toDoList.find((i) => i.id == elmID)),
+        //   1,
+        // );
+        setToDoList(toDoList.filter((i) => i.id !== elmID));
         console.log(toDoList.indexOf(toDoList.find((i) => i.id == elmID)));
         console.log(toDoList);
         console.log(toDoList.filter((i) => i.id == elmID));

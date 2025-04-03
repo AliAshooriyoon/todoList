@@ -16,9 +16,11 @@ const useFetch = (toDoList, supabase, newTask, setToDoList) => {
       if (newTask) {
         const { data, error } = await supabase
           .from("ToDoList")
-          .insert(objNewTask)
+          .insert([objNewTask])
           .single();
-        error ? console.log("Error", error) : toDoList.push(objNewTask);
+        error
+          ? console.log("Error", error)
+          : setToDoList((prev) => [...prev, data]) & console.log(data);
       }
     };
     addTask();
