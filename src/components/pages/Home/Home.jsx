@@ -3,6 +3,7 @@ import "./Home.css";
 import { useRef } from "react";
 import supabase from "../../../supabase-client";
 import { useEffect } from "react";
+import useFetch from "../../../useFetch";
 
 const Home = () => {
   //disable_eslint_next_line
@@ -19,6 +20,7 @@ const Home = () => {
     setNewTask(valueItem.current.value);
   };
 
+  useFetch();
   useEffect(() => {
     console.log(toDoList);
     const readTasks = async () => {
@@ -52,7 +54,7 @@ const Home = () => {
         </button>
         <div className="result_Box flex justify-around">
           {toDoList.map((i) => {
-            return <p>{i.name}</p>;
+            return <p key={i.id}>{i.name}</p>;
           })}
         </div>
       </div>
