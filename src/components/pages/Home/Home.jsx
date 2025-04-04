@@ -84,7 +84,6 @@ const Home = () => {
                       className="cursor-pointer"
                       onClick={() => removeItem(i.id, toDoList)}
                     />{" "}
-                    <MdModeEdit className="cursor-pointer" />
                   </div>
                 </div>
               </div>
