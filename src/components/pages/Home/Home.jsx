@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./Home.css";
 import { useRef } from "react";
 import supabase from "../../../supabase-client";
@@ -14,9 +14,13 @@ const Home = () => {
   const [newTask, setNewTask] = useState();
   //disable_eslint_next_line
   const valueItem = useRef();
-
+  const [taskWrote, setTaskWrote] = useState();
+  useCallback(() => {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  }, [newTask, taskWrote]);
   const addTaskToHook = () => {
     setNewTask(valueItem.current.value);
+    setTaskWrote("");
   };
   useFetch(toDoList, supabase, newTask, setNewTask, setToDoList);
   // ------------
@@ -54,7 +58,8 @@ const Home = () => {
               name=""
               ref={valueItem}
               className="bg-amber-50 p-8 w-[45rem]"
-              value={newTask}
+              value={taskWrote}
+              onChange={(e) => setTaskWrote(e.target.value)}
             />
             <button
               type="button"
