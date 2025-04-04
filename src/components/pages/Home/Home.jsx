@@ -9,19 +9,16 @@ import { MdModeEdit } from "react-icons/md";
 
 const Home = () => {
   //disable_eslint_next_line
-  const [usr, setUsr] = useState(true);
-  //disable_eslint_next_line
   const [toDoList, setToDoList] = useState([]);
   //disable_eslint_next_line
-  const [newTask, setNewTask] = useState("");
+  const [newTask, setNewTask] = useState();
   //disable_eslint_next_line
-  const [isLoading, setIsLoading] = useState(true);
   const valueItem = useRef();
 
   const addTaskToHook = () => {
     setNewTask(valueItem.current.value);
   };
-  useFetch(toDoList, supabase, newTask, setToDoList);
+  useFetch(toDoList, supabase, newTask, setNewTask, setToDoList);
   // ------------
   const removeItem = (elmID, toDoList) => {
     console.log("willst du das tun ?", elmID);
@@ -46,9 +43,7 @@ const Home = () => {
     };
     removeIt();
   };
-  useEffect(() => {
-    console.log("aa`");
-  }, [toDoList]);
+
   return (
     <>
       <div className="home mx-auto text-center ">
@@ -59,6 +54,7 @@ const Home = () => {
               name=""
               ref={valueItem}
               className="bg-amber-50 p-8 w-[45rem]"
+              value={newTask}
             />
             <button
               type="button"

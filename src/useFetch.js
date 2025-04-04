@@ -1,26 +1,31 @@
-import { useEffect } from "react";
-const useFetch = (toDoList, supabase, newTask, setToDoList) => {
+import { useEffect, useState } from "react";
+const useFetch = (toDoList, supabase, newTask, setNewTask, setToDoList) => {
+  const [isChangedItem, setIsChangedItem] = useState(true);
   useEffect(() => {
     console.log(toDoList);
     const readTasks = async () => {
       const { data, error } = await supabase.from("ToDoList").select("*");
-      data ? setToDoList(data) : console.log("Error into ReadTask", error);
+      data
+        ? setToDoList(data) & setIsChangedItem(true)
+        : console.log("Error into ReadTask", error);
     };
     readTasks();
+  }, [newTask, isChangedItem]);
+  // ------------------------------------------
+  useEffect(() => {
     const addTask = async () => {
-      console.log(newTask);
       const objNewTask = {
         name: newTask,
         isCompleted: false,
       };
+      console.log(newTask);
+
       if (newTask) {
         const { data, error } = await supabase
           .from("ToDoList")
           .insert([objNewTask])
           .single();
-        error
-          ? console.log("Error", error)
-          : setToDoList((prev) => [...prev, data]) & console.log(data);
+        error ? console.log("Error", error) : setIsChangedItem(false);
       }
     };
     addTask();
